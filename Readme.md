@@ -3,6 +3,8 @@ An OpenCV based webcam gaze tracker based on a simple image gradient-based eye c
 
 This is still a work in progress and does not track gaze yet.
 
+The credit for the eye-tracking part goes to 'trishume' and his work can be found at https://github.com/trishume/eyeLike
+
 ##Status
 The eye center tracking works well but I don't have a reference point like eye corner yet so it can't actually track
 where the user is looking.
