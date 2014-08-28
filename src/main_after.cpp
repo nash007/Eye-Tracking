@@ -95,9 +95,11 @@ int main( int argc, const char** argv ) {
 			43.0, 0.0, 360.0, cv::Scalar(255, 255, 255), -1);
 
 	// Read the video stream
-	capture = cvCaptureFromCAM( -1 );
+	//capture = cvCaptureFromCAM( -1 );
 
-	if( capture ) {
+	VideoCapture cap;
+	cap.open("http://10.42.0.39:1024/video");
+	//if( capture ) {
 		while( true ) {
 
 			char circ_window[] = "Moving dot";
@@ -324,7 +326,7 @@ int main( int argc, const char** argv ) {
 
 
 
-			frame = cvQueryFrame( capture );
+			frame = cvQueryFrame( cap );
 			// Reducing the resolution of the image to increase speed
 			cv::Mat smallFrame;
 			cv::resize(frame,smallFrame,cv::Size(round(1*frame.cols), round(1*frame.rows)),1,1,cv::INTER_LANCZOS4);
@@ -351,7 +353,7 @@ int main( int argc, const char** argv ) {
 			}
 
 		}
-	}
+	//}
 
 	releaseCornerKernels();
 
