@@ -3,8 +3,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/core/core.hpp>
 
-
-#include<stdio.h>
+#include <stdio.h>
 #include <iostream>
 #include <queue>
 #include <stdio.h>
@@ -96,13 +95,12 @@ int main( int argc, const char** argv ) {
 
 	// Read the video stream
 	capture = cvCaptureFromCAM( -1 );
-
 	if( capture ) {
 		while( true ) {
 
 			char circ_window[] = "Moving dot";
 
-			Mat circ_image = Mat::zeros( 414, 414, CV_8UC3 );
+			Mat circ_image = Mat::zeros(800, 1600, CV_8UC3 );
 			//ra = rand()%4;
 			//if (ra==1) rx+=1; else if(ra==2) rx-=1; else if(ra==3) ry+=1; else ry-=1; rx+=1; if(rx==500) rx=0;
 			/*
@@ -176,39 +174,48 @@ int main( int argc, const char** argv ) {
 
 			//std::cout<<lpx<<" "<<lpy<<" "<<rpx<<" "<<rpy<<"\n";
 
-			if(pt1d==0){
+			if(pt1d==0) {
 				rx=100; ry=300;
-				if(lpx<500 && lpy<500 && rpx<500 && rpy<500 &&avgc<cavgc){
-					if(avgc>waitt){arr[lpx][lpy][0]++; 
+				if(lpx<500 && lpy<500 && rpx<500 && rpy<500 && avgc<cavgc) {
+					if(avgc>waitt) {
+						arr[lpx][lpy][0]++; 
 						arr[rpx][rpy][1]++;
 						leftavgx+=lpx; leftavgy+=lpy;
-						rightavgx+=rpx; rightavgy+=rpy;}
-					avgc+=1;}
+						rightavgx+=rpx; rightavgy+=rpy;
+					}
+					avgc+=1;
+				}
 			}
 
 			else if(pt1d==1 && pt2d==0)
-			{rx=350; ry=50;
-				if(lpx<500 && lpy<500 && rpx<500 && rpy<500 &&avgc<cavgc){
-					if(avgc>waitt){arr2[lpx][lpy][0]++; 
+			{
+				rx=350; ry=50;
+				if(lpx<500 && lpy<500 && rpx<500 && rpy<500 &&avgc<cavgc) {
+					if(avgc>waitt) {
+						arr2[lpx][lpy][0]++; 
 						arr2[rpx][rpy][1]++;
 						leftavgx2+=lpx; leftavgy2+=lpy;
-						rightavgx2+=rpx; rightavgy2+=rpy;}
-					avgc+=1;}
+						rightavgx2+=rpx; rightavgy2+=rpy;
+					}
+					avgc+=1;
+				}
 			}
 
 
 			if(avgc==cavgc && pt1d==0)
-			{leftavgx /= 1.0* (cavgc-waitt);
+			{
+				leftavgx /= 1.0* (cavgc-waitt);
 				leftavgy /= 1.0* (cavgc-waitt);
 				rightavgx /= 1.0* (cavgc-waitt);
 				rightavgy /= 1.0* (cavgc-waitt);
 				std::cout<<leftavgx<<" "<<leftavgy<<" "<<rightavgx<<" "<<rightavgy<<"\n";
-				avgc++; pt1d=1; avgc=0; //for(int g=0;g<1000;g++);
+				avgc++; pt1d=1; avgc=0;
 			}
 
 
 			if(avgc==cavgc && pt2d==0)
-			{leftavgx2 /= 1.0* (cavgc-waitt);
+			{
+				leftavgx2 /= 1.0* (cavgc-waitt);
 				leftavgy2 /= 1.0* (cavgc-waitt);
 				rightavgx2 /= 1.0* (cavgc-waitt);
 				rightavgy2 /= 1.0* (cavgc-waitt);
@@ -225,8 +232,10 @@ int main( int argc, const char** argv ) {
 				int l4=leftavgy+10; if (l4<0) l4=0;
 				int l5=leftavgx; int l6=leftavgy;
 				for(int i=l1;i<l2;i++)
-				{for(int j=l3;j<l4;j++)
-					{;//std::cout<<arr[i][j][0]<<" ";
+				{
+					for(int j=l3;j<l4;j++)
+					{
+						//std::cout<<arr[i][j][0]<<" ";
 						if(i==l5 && j==l6) ;//std::cout<<arr[i][j][0]<<"x";
 					}
 					//std::cout<<"\n";
@@ -250,7 +259,7 @@ int main( int argc, const char** argv ) {
 				Point pt; pt.x=3*l5; pt.y=3*l6;
 				HeatMap(heatmap, pt, arr[l5][l6][0],1);
 
-				imshow( heatmapimg, heatmap );
+				//imshow( heatmapimg, heatmap );
 				moveWindow( heatmapimg, 600, 00 );
 
 
@@ -269,7 +278,7 @@ int main( int argc, const char** argv ) {
 				Point pt2; pt2.x=3*l5; pt2.y=3*l6;
 				HeatMap(heatmap2, pt2, arr2[l5][l6][0],1);
 
-				imshow( heatmapimg2, heatmap2 );
+				//imshow( heatmapimg2, heatmap2 );
 				moveWindow( heatmapimg2, 600, 300 );
 
 
@@ -295,7 +304,7 @@ int main( int argc, const char** argv ) {
 				//std::cout<<100+(lpx-leftavgx)/(leftavgx2-leftavgx)<<" "<<50+(lpy-leftavgy2)/(leftavgy-leftavgy2)<<"\n";
 
 				char fin[] = "This is it";
-				Mat dot = Mat::zeros(500,500, CV_8UC3); 
+				Mat dot = Mat::zeros(800,1600, CV_8UC3); 
 				Point pt2; 
 				pt2.x=100+(lpx-leftavgx)*(350-100)/((leftavgx2-leftavgx)*1.0);
 				//pt2.x=250;
@@ -305,6 +314,7 @@ int main( int argc, const char** argv ) {
 
 				if(pt2.x>500 && pt2.y>500) std::cout<<"Outside "<<pt2.x<<" "<<pt2.y<<"\n";
 				else if(pt2.x<0 && pt2.y<0) std::cout<<"Outside "<<pt2.x<<" "<<pt2.y<<"\n";
+				else std::cout<<"Inside "<<pt2.x<<" "<<pt2.y<<"\n";
 
 
 				imshow( fin, dot );
